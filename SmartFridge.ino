@@ -141,7 +141,7 @@ void changeTemp(double setTemp, float setDuration){
   //Establish number of steps and how long each step lasts
   setDuration = setDuration * 1000 * 60;    
   float timeStep = 30 * 1000; 
-  float numSteps = setDuration / timeStep; 
+  int numSteps = setDuration / timeStep; 
   int fullSteps = floor(numSteps);    
   float partialStep = numSteps - fullSteps;
   float startTime = millis();
@@ -163,7 +163,14 @@ void changeTemp(double setTemp, float setDuration){
   
   for(int k = 0; k < numSteps; k++){
     while(millis() < startTime + setDuration){
-      
+      float currentTemp = checkTemp();
+      if(currentTemp > tempGoals[k]){
+        digitalWrite(pinOut, HIGH);
+      }
+      else{
+        digitalWrite(pinOut, LOW);
+      }
+      delay(5000);
     }
   }
 
